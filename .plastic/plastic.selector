@@ -1,0 +1,4 @@
+repository "ARIE@Sibato5153@cloud"
+  path "/"
+    br "/main"
+    co "/main"
