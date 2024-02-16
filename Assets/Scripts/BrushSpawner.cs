@@ -1,27 +1,38 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Spawner : MonoBehaviour
+public class BrushSpawner : MonoBehaviour
 {
     public GameObject objectPrefab;
     public Transform cursor;
     public float spawnDistance = 1f;
     private GameObject spawnedObject;
     public GameObject ObjectPool;
-    public float rotationSensitivity;
-    public float scaleSensitivity;
+    public float scaleSensitivity = 0.2f;
+    public Text gravityMessage;
+    bool gravityOn = false;
 
-    public RectTransform verticalRotationPanel;
-    public RectTransform horizontalRotationPanel;
     public RectTransform scalePanel;
 
     private Vector2 touchStartPos;
     private void Start()
     {
+        Rigidbody rb = objectPrefab.GetComponent<Rigidbody>();
+        if (rb == null)
+        {
+            rb = objectPrefab.AddComponent<Rigidbody>();
+        }
+
+        rb.useGravity = false;
+        rb.isKinematic = true;
+
         Vector3 cameraForward = Camera.main.transform.forward;
         Vector3 spawnPosition = Camera.main.transform.position + cameraForward * spawnDistance;
         spawnedObject = Instantiate(objectPrefab, spawnPosition, Quaternion.identity);
         spawnedObject.transform.parent = cursor;
         spawnedObject.layer = 6;
+
+        gravityMessage.text = "gravity is disabled";
     }
 
     void Update()
@@ -35,15 +46,7 @@ public class Spawner : MonoBehaviour
                     break;
 
                 case TouchPhase.Moved:
-                    if (RectTransformUtility.RectangleContainsScreenPoint(verticalRotationPanel, touchStartPos))
-                    {
-                        RotateVertically(touch.deltaPosition.y);
-                    }
-                    else if (RectTransformUtility.RectangleContainsScreenPoint(horizontalRotationPanel, touchStartPos))
-                    {
-                        RotateHorizontally(touch.deltaPosition.x);
-                    }
-                    else if (RectTransformUtility.RectangleContainsScreenPoint(scalePanel, touchStartPos))
+                    if (RectTransformUtility.RectangleContainsScreenPoint(scalePanel, touchStartPos))
                     {
                         ScaleObject(touch.deltaPosition.y);
                     }
@@ -58,6 +61,7 @@ public class Spawner : MonoBehaviour
         {
             Vector3 cameraForward = Camera.main.transform.forward;
             Vector3 spawnPosition = Camera.main.transform.position + cameraForward * spawnDistance;
+            spawnedObject.transform.rotation = Camera.main.transform.rotation;
             spawnedObject.transform.position = spawnPosition;
         }
 
@@ -66,17 +70,6 @@ public class Spawner : MonoBehaviour
             SpawnObject();
         }
     }
-
-    void RotateVertically(float deltaPositionY)
-    {
-        spawnedObject.transform.Rotate(Vector3.right, deltaPositionY * Time.deltaTime * rotationSensitivity, Space.Self);
-    }
-
-    void RotateHorizontally(float deltaPositionX)
-    {
-        spawnedObject.transform.Rotate(Vector3.up, -deltaPositionX * Time.deltaTime * rotationSensitivity, Space.Self);
-    }
-
     void ScaleObject(float deltaPositionY)
     {
         float scaleFactor = 1f + deltaPositionY * Time.deltaTime * scaleSensitivity;
@@ -92,11 +85,20 @@ public class Spawner : MonoBehaviour
             Vector3 spawnPosition = Camera.main.transform.position + cameraForward * spawnDistance;
             GameObject NewSpawnedObject = Instantiate(spawnedObject, spawnPosition, Quaternion.identity);
             NewSpawnedObject.transform.parent = ObjectPool.transform;
+            NewSpawnedObject.transform.rotation = Camera.main.transform.rotation;
             NewSpawnedObject.layer = 6;
-
-            NewSpawnedObject.transform.rotation = spawnedObject.transform.rotation;
-
             NewSpawnedObject.transform.localScale = spawnedObject.transform.localScale;
+            Rigidbody rb = NewSpawnedObject.GetComponent<Rigidbody>();
+
+            if (gravityOn)
+            {
+                rb.useGravity = true;
+                rb.isKinematic = false;
+            } else
+            {
+                rb.useGravity = false;
+                rb.isKinematic = true;
+            }
         }
         else
         {
@@ -104,29 +106,26 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    void EnableGravity(GameObject selectedObject)
+    public void ToggleGrvity()
     {
-        Rigidbody rb = selectedObject.GetComponent<Rigidbody>();
-        if (rb != null)
+        if (gravityOn)
         {
-            rb.useGravity = true;
-        }
-        else
+            DisableGravity();
+        } else
         {
-            Debug.LogError("Rigidbody component not found!");
+            EnableGravity();
         }
     }
 
-    void DisableGravity(GameObject selectedObject)
+    void EnableGravity()
     {
-        Rigidbody rb = selectedObject.GetComponent<Rigidbody>();
-        if (rb != null)
-        {
-            rb.useGravity = false;
-        }
-        else
-        {
-            Debug.LogError("Rigidbody component not found!");
-        }
+        gravityOn = true;
+        gravityMessage.text = "gravity is enabled";
+    }
+
+    void DisableGravity()
+    {
+        gravityOn = false;
+        gravityMessage.text = "gravity is disabled";
     }
 }
