@@ -7,7 +7,7 @@ public class VoiceController : MonoBehaviour
 {
     const string LANG_CODE = "en-US";
 
-    public string command = "";
+    public CommandsController CommandsController;
 
     private void Start()
     {
@@ -60,8 +60,9 @@ public class VoiceController : MonoBehaviour
 
     void OnFinalSpeechResult(string result)
     {
-        command = result;
+        CommandsController.RunCommand(result);
     }
+
 
     void OnPartialSpeechResult(string result)
     {

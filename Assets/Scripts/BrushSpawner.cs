@@ -11,6 +11,10 @@ public class BrushSpawner : MonoBehaviour
     public float scaleSensitivity = 0.2f;
     public Text gravityMessage;
     bool gravityOn = false;
+    private PrimitiveType Shape = PrimitiveType.Cube;
+    private Color Color = Color.gray;
+
+    DefaultObject defaultObjectScript;
 
     public RectTransform scalePanel;
 
@@ -33,6 +37,8 @@ public class BrushSpawner : MonoBehaviour
         spawnedObject.layer = 6;
 
         gravityMessage.text = "gravity is disabled";
+
+        defaultObjectScript = spawnedObject.GetComponent<DefaultObject>();
     }
 
     void Update()
@@ -90,6 +96,11 @@ public class BrushSpawner : MonoBehaviour
             NewSpawnedObject.transform.localScale = spawnedObject.transform.localScale;
             Rigidbody rb = NewSpawnedObject.GetComponent<Rigidbody>();
 
+            DefaultObject defaultNewObjectScript = NewSpawnedObject.GetComponent<DefaultObject>();
+
+            defaultNewObjectScript.shapeType = Shape;
+            defaultNewObjectScript.shapeColor = Color;
+
             if (gravityOn)
             {
                 rb.useGravity = true;
@@ -117,15 +128,29 @@ public class BrushSpawner : MonoBehaviour
         }
     }
 
-    void EnableGravity()
+    public void EnableGravity()
     {
         gravityOn = true;
         gravityMessage.text = "gravity is enabled";
     }
 
-    void DisableGravity()
+    public void DisableGravity()
     {
         gravityOn = false;
         gravityMessage.text = "gravity is disabled";
+    }
+
+    public void ChangeToShape(PrimitiveType newShapeType)
+    {
+        defaultObjectScript.ChangeShape(newShapeType);
+        defaultObjectScript.shapeType = newShapeType;
+        Shape = newShapeType;
+    }
+
+    public void ChangeToColor(Color newColor)
+    {
+        defaultObjectScript.ChangeColor(newColor);
+        defaultObjectScript.shapeColor = newColor;
+        Color = newColor;
     }
 }
