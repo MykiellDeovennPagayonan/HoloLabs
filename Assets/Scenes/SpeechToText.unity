@@ -202,51 +202,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 92375462}
   m_CullTransparentMesh: 1
---- !u!1 &163105243
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 163105245}
-  - component: {fileID: 163105244}
-  m_Layer: 0
-  m_Name: VoiceController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &163105244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163105243}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 086ec004a16cf9647afcbbb95515db2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  uiText: {fileID: 92375464}
---- !u!4 &163105245
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 163105243}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 473.60037, y: 309.48953, z: -230.5282}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &216186952
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,9 +257,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 163105244}
-          m_TargetAssemblyTypeName: VoiceController, Assembly-CSharp
-          m_MethodName: StartListening
+        - m_Target: {fileID: 515562459}
+          m_TargetAssemblyTypeName: SpeechRecognizer, Assembly-CSharp
+          m_MethodName: StopListening
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -356,6 +311,58 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 216186952}
   m_CullTransparentMesh: 1
+--- !u!1 &515562456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 515562458}
+  - component: {fileID: 515562459}
+  m_Layer: 0
+  m_Name: 'SpeechRecognitionController '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &515562458
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515562456}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.674258, y: 1.7299067, z: 9.292935}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &515562459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515562456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b3acf8b800c9cf4380c39baa2885d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startListeningBtn: {fileID: 0}
+  stopListeningBtn: {fileID: 0}
+  continuousListeningTgle: {fileID: 0}
+  languageDropdown: {fileID: 0}
+  maxResultsInputField: {fileID: 0}
+  resultsTxt: {fileID: 0}
+  errorsTxt: {fileID: 0}
+  uiText: {fileID: 92375464}
 --- !u!1 &532653405
 GameObject:
   m_ObjectHideFlags: 0
@@ -749,10 +756,10 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 163105244}
-          m_TargetAssemblyTypeName: VoiceController, Assembly-CSharp
-          m_MethodName: StartSpeaking
-          m_Mode: 5
+        - m_Target: {fileID: 515562459}
+          m_TargetAssemblyTypeName: SpeechRecognizer, Assembly-CSharp
+          m_MethodName: StartListening
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -765,7 +772,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 163105244}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: VoiceController, Assembly-CSharp
           m_MethodName: StopSpeaking
           m_Mode: 1
@@ -1126,4 +1133,4 @@ SceneRoots:
   - {fileID: 1003223643}
   - {fileID: 1806806222}
   - {fileID: 925952735}
-  - {fileID: 163105245}
+  - {fileID: 515562458}
