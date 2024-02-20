@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "528615841570",
+    "firebase_url": "https://arie-b3614-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "arie-b3614",
+    "storage_bucket": "arie-b3614.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:528615841570:android:2d510ac0f2d86e5d124f7b",
+        "android_client_info": {
+          "package_name": "com.SEntralians.ARIE"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmw7kfEjFoI6e1I2aW7zh91I1iqKvk_Pk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

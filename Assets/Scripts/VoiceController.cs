@@ -7,7 +7,7 @@ public class VoiceController : MonoBehaviour
 {
     const string LANG_CODE = "en-US";
 
-    public CommandsController CommandsController;
+    public BrushCommandsController CommandsController;
 
     private void Start()
     {
